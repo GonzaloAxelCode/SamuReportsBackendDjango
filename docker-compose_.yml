@@ -1,0 +1,25 @@
+version: '3.9'
+
+
+services:
+  db:
+      image: postgres:15.0
+      environment:
+      - POSTGRES_DB=dbsamutest
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      volumes:
+      - postgres_data:/var/lib/postgresql/data
+  web:
+    build: .
+    command: ["gunicorn", "--bind", "0.0.0.0:8000", "core.wsgi:application"]
+    environment:
+      - DATABASE_URL=postgres://postgres:1234@db/dbsamutest
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+
+volumes:
+  postgres_data:

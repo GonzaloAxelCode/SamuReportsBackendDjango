@@ -1,0 +1,29 @@
+from django.contrib import admin
+
+# Register your models here.
+
+# Register your models here.
+from django.contrib import admin
+
+from .models import MAESTRO_HIS_ESTABLECIMIENTO, MAESTRO_HIS_CIE_CPMS, MAESTRO_HIS_NUEVO_ARCHIVO_PLANO, MAESTRO_HIS_UBIGEO_INEI_RENIEC, MAESTRO_HIS_OTRA_CONDICION, MAESTRO_HIS_ETNIA, MAESTRO_HIS_PROFESION, MAESTRO_HIS_TIPO_DOC, MAESTRO_HIS_PAIS, MAESTRO_HIS_CONDICION_CONTRATO, MAESTRO_HIS_FINANCIADOR, MAESTRO_HIS_UPS, MAESTRO_HIS_COLEGIO, MAESTRO_HIS_CENTRO_POBLADO, MAESTRO_HIS_ACTIVIDAD_HIS
+
+
+
+admin.site.register(MAESTRO_HIS_ESTABLECIMIENTO)
+admin.site.register(MAESTRO_HIS_CIE_CPMS)
+admin.site.register(MAESTRO_HIS_NUEVO_ARCHIVO_PLANO)
+admin.site.register(MAESTRO_HIS_UBIGEO_INEI_RENIEC)
+admin.site.register(MAESTRO_HIS_OTRA_CONDICION)
+admin.site.register(MAESTRO_HIS_ETNIA)
+admin.site.register(MAESTRO_HIS_PROFESION)
+admin.site.register(MAESTRO_HIS_TIPO_DOC)
+admin.site.register(MAESTRO_HIS_PAIS)
+admin.site.register(MAESTRO_HIS_CONDICION_CONTRATO)
+admin.site.register(MAESTRO_HIS_FINANCIADOR)
+admin.site.register(MAESTRO_HIS_UPS)
+admin.site.register(MAESTRO_HIS_COLEGIO)
+admin.site.register(MAESTRO_HIS_CENTRO_POBLADO)
+admin.site.register(MAESTRO_HIS_ACTIVIDAD_HIS)
+
+
+
