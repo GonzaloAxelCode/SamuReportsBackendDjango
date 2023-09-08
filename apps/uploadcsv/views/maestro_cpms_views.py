@@ -20,6 +20,7 @@ class MAESTRO_HIS_CIE_CPMS_CSV_View(APIView, FileValidationMixin):
     permission_classes = [AllowAny]
 
     def post(self, request):
+
         start_time = time.time()
         model = MAESTRO_HIS_CIE_CPMS
         instance = MAESTRO_HIS_CIE_CPMS()
@@ -46,7 +47,8 @@ class MAESTRO_HIS_CIE_CPMS_CSV_View(APIView, FileValidationMixin):
             database = ServiceDatabase(
                 objectDatrame.data, identifier_field, model)
 
-            database.create_objects_from_data()
+            # database.create_objects_from_data()
+            database.create_objects()
             database.saveData(ignore_conflicts=True)
             is_data_added = (database.data_count_save -
                              database.count_data_before) > 0

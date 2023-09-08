@@ -15,7 +15,7 @@ from apps.uploadcsv.views.maestro_etnia_views import MAESTRO_HIS_ETNIA_CSV_View,
     MAESTRO_HIS_ETNIA_List_View
 from apps.uploadcsv.views.maestro_financiador import MAESTRO_HIS_FINANCIADOR_CSV_View, \
     MAESTRO_HIS_FINANCIADOR_Delete_View, MAESTRO_HIS_FINANCIADOR_List_View
-from apps.uploadcsv.views.maestro_NOMINAL_relations_views import MAESTRO_HIS_NUEVO_ARCHIVO_PLANO_CSV_View_TEST, \
+from apps.uploadcsv.views.maestro_NOMINAL_relations_views import MAESTRO_HIS_NUEVO_ARCHIVO_PLANO_CSV_Export_View, MAESTRO_HIS_NUEVO_ARCHIVO_PLANO_CSV_View_TEST, \
     MAESTRO_HIS_NUEVO_ARCHIVO_PLANO_Delete_View_TEST, MAESTRO_HIS_NUEVO_ARCHIVO_PLANO_List_View_TEST
 from apps.uploadcsv.views.maestro_otra_condicion_views import MAESTRO_HIS_OTRA_CONDICION_CSV_View, \
     MAESTRO_HIS_OTRA_CONDICION_Delete_View, MAESTRO_HIS_OTRA_CONDICION_List_View
@@ -225,6 +225,11 @@ urls_maestro_nominal_test = [
          name="delete-all-maestro_his_nuevo_archivo_plano"),
     path("get-all-maestro_his_nuevo_archivo_plano", MAESTRO_HIS_NUEVO_ARCHIVO_PLANO_List_View_TEST.as_view(),
          name="get-all-maestro_his_nuevo_archivo_plano"),
+
+    path('export-csv-maestro_his_nuevo_archivo_plano',
+         MAESTRO_HIS_NUEVO_ARCHIVO_PLANO_CSV_Export_View.as_view(), name='export-csv'),
+
+
 ]
 
 # -------- DATA_CNV -----------

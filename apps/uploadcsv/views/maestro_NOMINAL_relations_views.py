@@ -18,6 +18,9 @@ from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+import csv
+import io
+from django.http import HttpResponse
 
 
 class MAESTRO_HIS_NUEVO_ARCHIVO_PLANO_CSV_View_TEST(APIView, FileValidationMixin):
@@ -155,3 +158,84 @@ class MAESTRO_HIS_NUEVO_ARCHIVO_PLANO_List_View_TEST(generics.ListAPIView):
     queryset = MAESTRO_HIS_NUEVO_ARCHIVO_PLANO.objects.all()
     serializer_class = MAESTRO_HIS_NUEVO_ARCHIVO_PLANOSerializer
     pagination_class = CustomPageNumberPagination
+
+
+class MAESTRO_HIS_NUEVO_ARCHIVO_PLANO_CSV_Export_View(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        # Query the database to get all records from your model
+        queryset = MAESTRO_HIS_NUEVO_ARCHIVO_PLANO.objects.all()
+
+        # Define the CSV file response
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="data.csv"'
+
+        # Create a CSV writer and write the header row
+        writer = csv.writer(response)
+        header = [
+            "Id", "Id_Cita", "Anio", "Mes", "Dia", "Fecha_Atencion",
+            "Lote", "Num_Pag", "Num_Reg", "Id_Ups", "Id_Establecimiento",
+            "Id_Paciente", "Id_Personal", "Id_Registrador", "Id_Financiador",
+            "Id_Condicion_Establecimiento", "Id_Condicion_Servicio", "Edad_Reg",
+            "Tipo_Edad", "Anio_Actual_Paciente", "Mes_Actual_Paciente",
+            "Dia_Actual_Paciente", "Id_Turno", "Codigo_Item", "Tipo_Diagnostico",
+            "Peso", "Talla", "Hemoglobina", "Perimetro_Abdominal",
+            "Perimetro_Cefalico", "Id_Otra_Condicion", "Id_Centro_Poblado",
+            "Id_Correlativo", "Id_Correlativo_Lab", "Valor_Lab",
+            "Fecha_Ultima_Regla", "Fecha_Solicitud_Hb", "Fecha_Resultado_Hb",
+            "Fecha_Registro", "Fecha_Modificacion", "Id_Pais"
+        ]
+
+        writer.writerow(header)
+
+        # Write the data rows
+        for record in queryset:
+            # Replace None with empty string in each field
+            row = [
+                str(record.Id or ''),
+                record.Id_Cita or '',
+                str(record.Anio or ''),
+                str(record.Mes or ''),
+                str(record.Dia or ''),
+                record.Fecha_Atencion or '',
+                record.Lote or '',
+                str(record.Num_Pag or ''),
+                str(record.Num_Reg or ''),
+                str(record.Id_Ups_id or ''),
+                str(record.Id_Establecimiento_id or ''),
+                str(record.Id_Paciente_id or ''),
+                str(record.Id_Personal_id or ''),
+                str(record.Id_Registrador_id or ''),
+                str(record.Id_Financiador_id or ''),
+                record.Id_Condicion_Establecimiento or '',
+                record.Id_Condicion_Servicio or '',
+                str(record.Edad_Reg or ''),
+                record.Tipo_Edad or '',
+                str(record.Anio_Actual_Paciente or ''),
+                str(record.Mes_Actual_Paciente or ''),
+                str(record.Dia_Actual_Paciente or ''),
+                record.Id_Turno or '',
+                str(record.Codigo_Item_id or ''),
+                record.Tipo_Diagnostico or '',
+                str(record.Peso or ''),
+                str(record.Talla or ''),
+                str(record.Hemoglobina or ''),
+                str(record.Perimetro_Abdominal or ''),
+                str(record.Perimetro_Cefalico or ''),
+                str(record.Id_Otra_Condicion_id or ''),
+                str(record.Id_Centro_Poblado_id or ''),
+                str(record.Id_Correlativo or ''),
+                str(record.Id_Correlativo_Lab or ''),
+                record.Valor_Lab or '',
+                record.Fecha_Ultima_Regla or '',
+                record.Fecha_Solicitud_Hb or '',
+                record.Fecha_Resultado_Hb or '',
+                record.Fecha_Registro or '',
+                record.Fecha_Modificacion or '',
+                str(record.Id_Pais_id or '')
+            ]
+
+            writer.writerow(row)
+
+        return response

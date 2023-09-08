@@ -356,13 +356,36 @@ class ServiceDatabase:
                 details={'error_details': str(e)}
             )
 
+    def create_objects(self):
+        try:
+            existing_ids = self.model.objects.values_list(
+                self.identifier_field, flat=True)
+            self.data = self.data[~self.data[self.identifier_field].isin(
+                existing_ids)]
+
+            unique_objects = {}
+            for _, row in self.data.iterrows():
+                row_dict = row.to_dict()
+                id_value = row_dict[self.identifier_field]
+                if id_value not in unique_objects:
+                    unique_objects[id_value] = self.model(**row_dict)
+
+            self.objects = list(unique_objects.values())
+            self.added_objects_count = len(self.objects)
+
+        except Exception as e:
+            raise CustomError(
+                error_type=ErrorType.DATABASE_ERROR,
+                message=f'Ocurrió un error al crear objetos de tipo {self.model.__name__}.',
+                details={'error_details': str(e)}
+            )
+
     def saveData(self, ignore_conflicts=False, batch_size=2000):
-        print(self.added_objects_count)
+
         with transaction.atomic():
             for i in range(0, self.added_objects_count, batch_size):
                 batch_data = self.objects[i:i+batch_size]
                 self.model.objects.bulk_create(
                     batch_data, ignore_conflicts=ignore_conflicts)
-                print(len(batch_data))
 
         self.data_count_save = self.model.objects.all().count()
