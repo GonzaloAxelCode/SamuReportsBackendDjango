@@ -27,12 +27,13 @@ class VerificarDatosAPIView(View):
 
                 respuesta.append({
                     'nombre_modelo': modelo.__name__,
-                    'tiene_datos': not tiene_datos,
+                    'tiene_datos':tiene_datos,
                     'properties': properties,
-                    'title': title
-
+                    'title': title,
+                    'count':objetos.count(),
+                        
                 })
-
+            
             return JsonResponse(respuesta, safe=False)
 
         except ObjectDoesNotExist:

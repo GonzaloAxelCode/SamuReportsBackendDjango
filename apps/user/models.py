@@ -25,13 +25,17 @@ class UserManager(BaseUserManager):
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
+    
+    
     nickname = models.CharField(max_length=30, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     photo_url = models.CharField(
         max_length=255, default="https://res.cloudinary.com/ddksrkond/image/upload/v1688411778/default_dfvymc.webp")
+
+    
     date_joined = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -39,11 +43,13 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     desactivate_account = models.BooleanField(default=False)
 
     objects = UserManager()
-
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nickname', 'first_name', 'last_name']
     SET_USERNAME_RETYPE = True
     USERNAME_RESET_SHOW_EMAIL_NOT_FOUND = False
+    USERNAME_RESET_CONFIRM_RETYPE=True
+    USERNAME_RESET_CONFIRM_URL=True
 
     def __str__(self):
         return f"{self.nickname}"

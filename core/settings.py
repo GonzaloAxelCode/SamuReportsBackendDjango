@@ -1,9 +1,10 @@
-from decouple import config
+
 import environ
 import logging
 import os
 from datetime import timedelta
 from pathlib import Path
+import cloudinary.api	
 env = environ.Env()
 environ.Env.read_env()
 ENVIRONMENT = env
@@ -14,8 +15,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
+cloudinary.config( 
+  	cloud_name = "ddksrkond",
+  	api_key = "312755688449856",
+  	api_secret = "yZKXnxAVIN3sbNp2POwZPOZnIwc"
+)
 
-DEBUG = False
+CLOUDINARY_URL="cloudinary://312755688449856:yZKXnxAVIN3sbNp2POwZPOZnIwc@ddksrkond"
+DEBUG = True
 
 # Cors
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')
@@ -56,9 +63,7 @@ THIRD_PARTY_APPS = ["corsheaders",
                     'allauth',
                     'allauth.account',
                     "rest_framework.authtoken",
-                    'rosetta',
-
-
+                    #'rosetta',
                     ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -190,8 +195,6 @@ DJOSER = {
         'current_user': 'apps.user.serializers.UserAcountCreateSerializer',
         'user_delete': 'djoser.serializers.UserDeleteSerializer',
     },
-
-
 }
 
 LANGUAGE_CODE = 'en-us'
@@ -222,7 +225,7 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 # Others
 
 SITE_DOMAIN = os.environ.get("SITE_DOMAIN")
-DOMAIN = config('DOMAIN')
+DOMAIN = os.environ.get('DOMAIN')
 SITE_NAME = ('SAMU ILO')
 
 SITE_ID = 1
@@ -242,7 +245,8 @@ USE_TZ = True
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
@@ -251,3 +255,5 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+
+

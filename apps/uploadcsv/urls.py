@@ -244,8 +244,8 @@ urls_data_cnv = [
 
 
 urls_extra = [
-    path("verify-data-models", VerificarDatosAPIView.as_view(),
-         name="verify-data-models"),
+    path("get-data-models", VerificarDatosAPIView.as_view(),
+         name="get-data-models"),
     path("cnv_relation_paciente", CNV_RELATION_PACIENTEView.as_view(),
          name="cnv_relation_paciente")
 
