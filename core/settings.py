@@ -15,14 +15,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
+
+
+
 cloudinary.config( 
-  	cloud_name = "ddksrkond",
-  	api_key = "312755688449856",
-  	api_secret = "yZKXnxAVIN3sbNp2POwZPOZnIwc"
+  	cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'),
+  	api_key = os.environ.get('CLOUDINARY_API_KEY'),
+  	api_secret = os.environ.get('CLOUDINARY_API_SECRET')
 )
 
-CLOUDINARY_URL="cloudinary://312755688449856:yZKXnxAVIN3sbNp2POwZPOZnIwc@ddksrkond"
-DEBUG = True
+CLOUDINARY_URL=os.environ.get("CLOUDINARY_URL")
+DEBUG = False
 
 # Cors
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')
